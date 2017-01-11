@@ -1,8 +1,10 @@
 def set_jobs_retention_policy_by_branch(branch) {
     try {
+      branches_str = "${env.retention_branches}" != "null" ? "${env.retention_branches}" : "[]"
+        branches = branches_str.tokenize(',[]').collect { it as String }
       def tmp_branch_name = branch =~ "(^.*).*"
           switch (tmp_branch_name[0][1]) {
-            case ["master", "development", "test_retention_policy"]:
+            case branches:
                 def maxBuilds = "${env.retention_maxBuilds}" != "null" ? "${env.retention_maxBuilds}" : "100"
                 println "Retention policy: Only the last " + maxBuilds + " jobs are kept."
                 properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: maxBuilds]]])
