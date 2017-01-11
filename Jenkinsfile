@@ -33,4 +33,8 @@ node {
   stage('stage 3') {
     echo 'stage 3'
   }
+    
+    state('WS cleanup'){
+        step([$class: 'WsCleanup'])
+    }
 }
