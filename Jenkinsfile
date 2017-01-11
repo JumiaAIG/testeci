@@ -4,9 +4,11 @@ def set_jobs_retention_policy_by_branch(branch) {
           switch (tmp_branch_name[0][1]) {
             case ["master", "development", "test_retention_policy"]:
                 def maxBuilds = "${env.retention_maxBuilds}" != "null" ? "${env.retention_maxBuilds}" : "100"
+                println "Retention policy: Only the last " + maxBuilds + " works are kept."
                 properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: maxBuilds]]])
                 break
             default:
+                println "Retention policy: Not applied for this branch"
                 break
           }
     } catch (err) {
