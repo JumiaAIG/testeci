@@ -1,7 +1,13 @@
 def set_jobs_retention_policy_by_branch(branch) {
     try {
-      branches_str = "${env.retention_branches}" != "null" ? "${env.retention_branches}" : "[]"
-        branches = branches_str.tokenize(',[]').collect { it as String }
+        branches_str = "${env.retention_branches}" != "null" ? "${env.retention_branches}" : "[]"
+        branches = branches_str.trim()
+	        .replace(" ", "")
+	        .replace("'", "")
+            .replace("\"", "")
+	        .tokenize(',[]')
+	        .collect { it as String }
+        
       def tmp_branch_name = branch =~ "(^.*).*"
           switch (tmp_branch_name[0][1]) {
             case branches:
