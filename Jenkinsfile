@@ -1,13 +1,15 @@
 def set_jobs_retention_policy_by_branch(branch) {
     try {
         branches_str = "${env.retention_branches}" != "null" ? "${env.retention_branches}" : "[]"
-        branches = branches_str.trim()
-	        .replace(" ", "")
-	        .replace("'", "")
-            .replace("\"", "")
-	        .tokenize(',[]')
-	        .collect { it as String }
-        
+        branches = branches_str
+		.trim()
+		.replace(" ", "")
+		.replace("'", "")
+		.replace("\"", "")
+		.tokenize(',[]')
+	    	//java.lang.UnsupportedOperationException: Calling public static java.util.List org.codehaus.groovy.runtime.DefaultGroovyMethods.collect(java.util.Collection,groovy.lang.Closure) on a CPS-transformed closure is not yet supported (JENKINS-26481); encapsulate in a @NonCPS method, or use Java-style loops
+		//.collect { it as String }
+
       def tmp_branch_name = branch =~ "(^.*).*"
           switch (tmp_branch_name[0][1]) {
             case branches:
