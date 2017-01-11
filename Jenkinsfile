@@ -1,5 +1,4 @@
-node {
-  def set_jobs_retention_policy_by_branch(branch) {
+def set_jobs_retention_policy_by_branch(branch) {
     def result
     try {
       def tmp_branch_name = branch =~ "(^.*)-.*"
@@ -16,6 +15,8 @@ node {
 
     result
   }
+
+node {
   
   print set_jobs_retention_policy_by_branch(${env.BRANCH_NAME})
 
