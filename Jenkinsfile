@@ -13,6 +13,7 @@ def set_jobs_retention_policy_by_branch(branch) {
           }
     } catch (err) {
       //do nothing
+        println "Retention policy: Not applied for this branch"
     }
   }
 
