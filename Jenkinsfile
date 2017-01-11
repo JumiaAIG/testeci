@@ -1,10 +1,9 @@
 def set_jobs_retention_policy_by_branch(branch) {
-    def result
     try {
       def tmp_branch_name = branch =~ "(^.*).*"
           switch (tmp_branch_name[0][1]) {
             case ["master", "development", "test_retention_policy"]:
-                result = properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']]])
+                properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', numToKeepStr: '10']]])
                 break
             default:
                 break
@@ -12,8 +11,6 @@ def set_jobs_retention_policy_by_branch(branch) {
     } catch (err) {
       //do nothing
     }
-
-    result
   }
 
 node {
