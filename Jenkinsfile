@@ -18,7 +18,7 @@ def set_jobs_retention_policy_by_branch(branch) {
 
 node {
   
-  print set_jobs_retention_policy_by_branch(${env.BRANCH_NAME})
+  print set_jobs_retention_policy_by_branch("${env.BRANCH_NAME}")
 
   stage('stage 1') {
     echo 'stage 1'
